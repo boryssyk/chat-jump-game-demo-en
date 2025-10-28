@@ -419,7 +419,7 @@
         matchWebGLToCanvasSize: true,
         devicePixelRatio: pixelRatio
       }, (progress) => {
-        loadingCover.innerText = `Ładowanie: ${Math.round(progress * 100)}%`;
+        loadingCover.innerText = `Loading: ${Math.round(progress * 100)}%`;
       }).then(() => {
         setTimeout(() => loadingCover.remove(), 1000);
       }).catch((message) => {
