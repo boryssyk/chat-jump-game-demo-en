@@ -35,9 +35,8 @@
       <h1 id="logo"><a href="#">Example</a></h1>
       <nav id="nav">
         <ul>
-          <li><a href="#">Home</a></li>
           <li>
-            <a href="#">Layouts</a>
+            <a href="#">Pages</a>
             <ul>
               <li><a href="#">Left Sidebar</a></li>
               <li><a href="#">Right Sidebar</a></li>
@@ -53,7 +52,7 @@
               </li>
             </ul>
           </li>
-          <li><a href="#">Elements</a></li>
+          <li>boryssyk@gmail.com</li>
           <li><a href="#" class="button primary">Sign Up</a></li>
         </ul>
       </nav>
@@ -141,6 +140,10 @@
         <li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
         <li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
         <li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+      </ul>
+      <ul class="credits">
+        <li><a href="https://www.linkedin.com/in/pawel-borysiuk/">LinkedIn</a></li>
+        <li>boryssyk@gmail.com</li>
       </ul>
       <ul class="copyright">
         <li>&copy; Untitled. All rights reserved.</li>
@@ -427,6 +430,20 @@
         loadingCover.innerText = "Błąd ładowania: " + message;
       });
     }
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('a[href]').forEach(link => {
+        link.addEventListener('click', () => {
+          if (!link.href.includes(location.hostname)) {
+            gtag('event', 'outbound_click', {
+              event_category: 'outbound',
+              event_label: link.href
+            });
+          }
+        });
+      });
+    });
   </script>
 
 
