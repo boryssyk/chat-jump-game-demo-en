@@ -177,7 +177,7 @@
     <div id="chat-header">Online Chat</div>
     <div id="chat-body">
       <p>Please wait while we connect you with a specialist...</p>
-      <p>Would you like to play a game?</p>
+      <p id="question">Would you like to play a game?</p>
       <button id="start-game-btn">Yes, I do 🎮</button>
     </div>
   </div>
@@ -328,6 +328,8 @@
     // Останавливаем после клика
     btn.addEventListener('click', () => {
       pulsing = false;
+      document.getElementById('question').textContent = 'Game is loading, please wait...';
+      btn.style.display = 'none';
       btn.style.transform = 'scale(1)';
       btn.style.transition = 'transform 0.2s ease';
       btn.style.backgroundColor = "#0078D4"
@@ -393,29 +395,26 @@
     /* Инициализация Unity */
     function initUnityGame() {
       if (window.unityInitialized) return;
+      gtag('event', 'unutyCanvasInitStarted', { event_category: 'engagement' });
+
       window.unityInitialized = true;
 
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       var pixelRatio;
 
       if (isMobile) {
-        console.log("Mobile device detected, setting pixel ratio to 3");
+        gtag('event', 'mobileDeviceDetected', { event_category: 'engagement' });
         pixelRatio = 3;
       } else {
-        console.log("Non-mobile device detected, using window.devicePixelRatio");
+        gtag('event', 'desktopDeviceDetected', { event_category: 'engagement' });
         if (window.devicePixelRatio === null) {
-          console.log("window.devicePixelRatio is null, setting pixel ratio to 3");
           pixelRatio = 3;
         } else if (window.devicePixelRatio < 3) {
           pixelRatio = 3;
         } else {
-          console.log("window.devicePixelRatio is valid, using it:", pixelRatio);
           pixelRatio = window.devicePixelRatio;
         }
       }
-
-      console.log("window.devicePixelRatio:", window.devicePixelRatio);
-      console.log("Using pixel ratio:", pixelRatio);
 
       createUnityInstance(document.querySelector("#unity-canvas"), {
         dataUrl: "Build/docs.data",
@@ -432,7 +431,23 @@
         loadingCover.innerText = `Loading: ${Math.round(progress * 100)}%`;
       }).then(() => {
         setTimeout(() => loadingCover.remove(), 1000);
+        gtag('event', 'unityCanvasLoaded', { event_category: 'engagement' });
+        document.getElementById("unity-canvas").addEventListener("click", () => {
+          gtag('event', 'userCanvasClick', { event_category: 'engagement' });
+        });
+        document.addEventListener('keydown', e => {
+          if (e.code === 'KeyA' || e.code === 'KeyD') {
+            gtag('event', 'userKeyPress', {
+              event_category: 'engagement',
+              event_label: e.code
+            });
+          }
+        });
       }).catch((message) => {
+        gtag('event', 'unityCanvasLoadError', {
+          event_category: 'error',
+          event_label: message
+        });
         loadingCover.innerText = "Błąd ładowania: " + message;
       });
     }
@@ -450,6 +465,7 @@
         });
       });
     });
+
   </script>
 
 
