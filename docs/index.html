@@ -1,9 +1,5 @@
 <!DOCTYPE HTML>
-<!--
-	Landed by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+
 <html>
 
 <head>
@@ -15,7 +11,6 @@
   <noscript>
     <link rel="stylesheet" href="assets/css/noscript.css" />
   </noscript>
-  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-M9CVEWYBHS"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -30,7 +25,6 @@
 <body class="is-preload">
   <div id="page-wrapper">
 
-    <!-- Header -->
     <header id="header">
       <h1 id="logo"><a href="#">Example</a></h1>
       <nav id="nav">
@@ -58,7 +52,6 @@
       </nav>
     </header>
 
-    <!-- Main -->
     <div id="main" class="wrapper style1">
       <div class="container">
         <header class="major">
@@ -68,7 +61,6 @@
         <div class="row gtr-150">
           <div class="col-4 col-12-medium">
 
-            <!-- Sidebar -->
             <section id="sidebar">
               <section>
                 <h3>Play the game while waiting</h3>
@@ -103,7 +95,6 @@
           </div>
           <div class="col-8 col-12-medium imp-medium">
 
-            <!-- Content -->
             <section id="content">
               <a href="#" class="image "><img src="images/pic03.png" alt="" /></a>
               <h3>Try the game</h3>
@@ -137,7 +128,6 @@
       </div>
     </div>
 
-    <!-- Footer -->
     <footer id="footer">
       <ul class="icons">
         <li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
@@ -160,7 +150,6 @@
   </div>
 
 
-  <!-- Scripts -->
   <script src="assets/js/jquery.min.js"></script>
   <script src="assets/js/jquery.scrolly.min.js"></script>
   <script src="assets/js/jquery.dropotron.min.js"></script>
@@ -169,10 +158,8 @@
   <script src="assets/js/breakpoints.min.js"></script>
   <script src="assets/js/util.js"></script>
   <script src="assets/js/main.js"></script>
-  <!-- 🔹 Кнопка вызова чата -->
   <div id="chat-toggle">💬</div>
 
-  <!-- 🔹 Окно чата -->
   <div id="chat-window">
     <div id="chat-header">Online Chat</div>
     <div id="chat-body">
@@ -183,14 +170,12 @@
   </div>
 
 
-  <!-- 🔹 Контейнер Unity -->
   <div id="unity-container" style="display:none;">
     <div id="loading-cover">Loading: 0%</div>
     <canvas id="unity-canvas" tabindex="-1"></canvas>
   </div>
 
   <style>
-    /* 🔸 Кнопка вызова чата */
     #chat-toggle {
       position: fixed;
       bottom: 15px;
@@ -215,7 +200,6 @@
       transform: scale(1.05);
     }
 
-    /* 🔸 Чат */
     #chat-window {
       position: fixed;
       bottom: 90px;
@@ -265,7 +249,6 @@
       background: #005fa3;
     }
 
-    /* 🔸 Игра */
     #unity-container {
       position: fixed;
       bottom: 90px;
@@ -298,7 +281,6 @@
     }
   </style>
 
-  <!-- 🔹 Логика -->
   <script src="Build/docs.loader.js"></script>
   <script>
 
@@ -311,21 +293,17 @@
     function animateButton() {
       if (!pulsing) return;
 
-      // Изменяем оттенок цвета (по кругу HSL)
       hue = (hue + 2) % 360;
       btn.style.backgroundColor = `hsl(${hue}, 90%, 55%)`;
 
-      // Пульсация (scale)
       const scale = 1 + 0.5 * Math.sin(Date.now() / 200);
       btn.style.transform = `scale(${scale})`;
 
       requestAnimationFrame(animateButton);
     }
 
-    // Запускаем анимацию
     animateButton();
 
-    // Останавливаем после клика
     btn.addEventListener('click', () => {
       pulsing = false;
       document.getElementById('question').textContent = 'Game is loading, please wait...';
@@ -342,12 +320,10 @@
     const unityContainer = document.getElementById("unity-container");
     const loadingCover = document.getElementById("loading-cover");
 
-    /* Соотношение 9:16 — как в твоей игре */
     const aspect = 9 / 16;
 
-    /* функция выставления одинаковых размеров */
     function syncChatAndGameSize() {
-      const vh = window.innerHeight * 0.6; // 60% высоты экрана
+      const vh = window.innerHeight * 0.6; 
       const chatHeight = vh;
       const chatWidth = chatHeight * aspect;
 
@@ -359,11 +335,9 @@
       unityContainer.style.width = chatWidth + "px";
     }
 
-    /* при загрузке и изменении размера */
     window.addEventListener("resize", syncChatAndGameSize);
     window.addEventListener("load", syncChatAndGameSize);
 
-    /* Открыть/закрыть чат */
     chatToggle.addEventListener("click", () => {
       gtag('event', 'chatToggle', { event_category: 'engagement' });
 
@@ -375,24 +349,22 @@
       }
     });
 
-    /* Запуск игры */
     startGameBtn.addEventListener("click", () => {
       gtag('event', 'startGameBtn', { event_category: 'engagement' });
 
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       if (isMobile) {
-        chatWindow.style.display = "none";   // скрыть окно чата
-        // chatToggle.style.display = "none";   // скрыть кнопку вызова
+        chatWindow.style.display = "none";  
+        // chatToggle.style.display = "none";   
         unityContainer.style.position = "fixed";
-        unityContainer.style.bottom = "90px"; // как у чата
-        unityContainer.style.right = "15px";  // как у чата
+        unityContainer.style.bottom = "90px";
+        unityContainer.style.right = "15px"; 
       }
       syncChatAndGameSize();
       unityContainer.style.display = "block";
       initUnityGame();
     });
 
-    /* Инициализация Unity */
     function initUnityGame() {
       if (window.unityInitialized) return;
       gtag('event', 'unutyCanvasInitStarted', { event_category: 'engagement' });
